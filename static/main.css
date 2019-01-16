@@ -1,0 +1,64 @@
+body, html {
+    width: 100%;
+    min-width: 1000px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+}
+#main {
+    width: 100%;
+    min-height: 100%;
+}
+#header {
+    width: 100%;
+    font-size: 20px;
+    height: 100px;
+    text-align: center;
+    background: #8AEAF9;
+   }
+#category {
+    width: 25%;
+    height: 300px;
+    text-align: center;
+    float: left;
+    background: #8e96ee;
+   }
+#mon {
+    text-align: center;
+    width: 50%;
+}
+#content {
+    float: right;
+    width: 75%;
+    height: 300px;
+    text-align: center;
+    background: #9fd690;
+   }
+#prod {
+    float: left;
+    width: 25%;
+    height: 60px;
+    text-align: center;
+    background: #d6adcb;
+}
+#footer {
+    width: 100%;
+    font-size: 20px;
+    height: 100px;
+    text-align: center;
+    background: #f9c0bc;
+   }
+#clear {
+    clear: both;
+}
+
+
+
+
+
+
+
+
+
+
