@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from appcatalog.views import hello
+from appcatalog.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', hello)
+    url(r'^', index)
 ]
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title> Electronic catalog </title>
-    <link rel="stylesheet" type="text/css" href="{% static "main.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
 </head>
 
 <body>
@@ -24,10 +24,15 @@
         </div>
         <div id="content">
             <div> Контент </div>
-            <div id="prod"> Товар 1 </div>
-            <div id="prod"> Товар 2 </div>
-            <div id="prod"> Товар 3 </div>
-            <div id="prod"> Товар 4 </div>
+            {%  for prod in products %}
+                {% if prod.img %}
+                    <img src="{{ MEDIA_URL }}{{ prod.img.url }}">
+                    <div id="prod"> {{ prod.name }} </div>
+                    <div id="prod"> {{ prod.name }} </div>
+                    <div id="prod"> {{ prod.category }} </div>
+                    <div id="prod"> {{ prod.description }} </div>
+                {%  endif %}
+            {% endfor %}
         </div>
         <div id="clear"></div>
         <div id="footer" align="center"> Дно сайта </div>
