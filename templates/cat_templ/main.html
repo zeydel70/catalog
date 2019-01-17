@@ -24,14 +24,15 @@
         </div>
         <div id="content">
             <div> Контент </div>
-            {%  for prod in products %}
-                {% if prod.img %}
-                    <img src="{{ MEDIA_URL }}{{ prod.img.url }}">
-                    <div id="prod"> {{ prod.name }} </div>
-                    <div id="prod"> {{ prod.name }} </div>
-                    <div id="prod"> {{ prod.category }} </div>
-                    <div id="prod"> {{ prod.description }} </div>
+            {% for product in products %}
+                <div id="prod">
+                {% if product.img %}
+                    <img src="{{ MEDIA_URL }}{{ product.img }}">
                 {%  endif %}
+                <div id="prod"> {{ product.name }} </div>
+                <div id="prod"> {{ product.category }} </div>
+                <div id="prod"> {{ product.description }} </div>
+                </div>
             {% endfor %}
         </div>
         <div id="clear"></div>

@@ -31,14 +31,13 @@ body, html {
 #content {
     float: right;
     width: 75%;
-    height: 300px;
     text-align: center;
     background: #9fd690;
    }
 #prod {
-    float: left;
+    display: flex;
     width: 25%;
-    height: 60px;
+    height: 200px;
     text-align: center;
     background: #d6adcb;
 }
