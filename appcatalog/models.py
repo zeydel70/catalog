@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.utils.text import slugify
 
 
 class Product(models.Model):
@@ -15,8 +16,14 @@ class Product(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=50, )
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='child')
     description = models.TextField(max_length=300)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return '%s' % self.name
@@ -24,5 +31,14 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+
+
+    def get_absolute_url(self):
+        if self.parent is None:
+            url = '/{}/'.format(self.slug)
+            return url
+        else:
+            return '{}{}/'.format(self.parent.get_absolute_url(), self.slug)
+
 
  # print Category.objects.all().query

@@ -13,12 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf import settings
 from django.contrib import admin
-from appcatalog.views import index
+from django.conf.urls import url
+from django.conf.urls.static import static
 
-urlpatterns = [
+from appcatalog import views
+from appcatalog.views import catalog
+
+# from catalog import settings
+
+# urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
     url(r'^admin/', admin.site.urls),
-    url(r'^', index)
-]
+    # url(r'^(?P<slug>[-\w]+)/$', views.category),
+#    url(r'^monitors/$', views.get_monitors),
+#    url(r'^monitors/(?P<inch>[0-9]{2})/$', views.get_monitors_inches),
 
+    url(r'^$', catalog)
+]

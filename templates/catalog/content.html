@@ -1,0 +1,17 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <div id="product-list">
+        <div> Контент </div>
+        {% for product in products %}
+            <div id="product-list-item">
+            {% if product.img %}
+                <img src="{{ product.img.url }}">
+            {%  endif %}
+            <div> {{ product.name }} </div>
+            <div> {{ product.category }} </div>
+            <div> {{ product.description }} </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div id="clear"></div>
+{% endblock %}

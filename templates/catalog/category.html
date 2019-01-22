@@ -4,9 +4,9 @@
         <div> Контент </div>
         {% for category in categories %}
             <div id="product-list-item">
-                <div> {{ category.name }} </div>
-                <div> {{ category.parent }} </div>
-                <div> {{ category.description }} </div>
+                <div> Name: {{ category.name }} </div>
+                <div> Parent: {{ category.parent }} </div>
+                <div> Description: {{ category.description }} </div>
             </div>
         {% endfor %}
     </div>
