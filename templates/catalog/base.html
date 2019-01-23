@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-{#{% load staticfiles %}#}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> Electronic catalog </title>
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
 </head>
 
 <body>
@@ -12,10 +12,8 @@
         <div id="header" align="center"> Электронный каталог </div>
         <div id="category"> Категория
             {% for category in categories %}
-               <ul>
-                   <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
-               </ul>
-           {% endfor %}
+               <ul>{% include "catalog/tree_category.html" %}</ul>
+            {% endfor %}
         </div>
         {% block content %}
         {% endblock %}

@@ -20,18 +20,12 @@ class Category(models.Model):
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='child')
     description = models.TextField(max_length=300)
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
-
-
-    def __str__(self):
-        return '%s' % self.name
-
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
+    def __str__(self):
+        return '%s' % self.name
 
     def get_absolute_url(self):
         if self.parent is None:

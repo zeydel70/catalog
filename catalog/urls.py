@@ -33,4 +33,4 @@ urlpatterns += [
 #    url(r'^monitors/(?P<inch>[0-9]{2})/$', views.get_monitors_inches),
 
     url(r'^$', catalog)
-]
+]    #  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

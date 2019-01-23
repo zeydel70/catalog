@@ -6,8 +6,10 @@ from django.shortcuts import render
 from .models import Product, Category
 from django.template import Context, Template
 
-def catalog(request, slug=None):
-    return render(request, 'catalog/content.html',  context=RequestContext(request)) #
+
+def catalog(request, path=None):
+    products = Product.objects.all()
+    return render(request, 'catalog/content.html', {'products': products}) #
 
 # def category(request, path):
 #     '/'
