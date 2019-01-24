@@ -29,8 +29,6 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [
     url(r'^admin/', admin.site.urls),
     # url(r'^(?P<slug>[-\w]+)/$', views.category),
-#    url(r'^monitors/$', views.get_monitors),
-#    url(r'^monitors/(?P<inch>[0-9]{2})/$', views.get_monitors_inches),
 
     url(r'^$', catalog)
-]    #  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

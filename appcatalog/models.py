@@ -10,9 +10,9 @@ class Product(models.Model):
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='products')
     description = models.TextField(max_length=300)
 
-
     def __str__(self):
         return '%s' % self.name
+
 
 class Category(models.Model):
     name = models.CharField(max_length=128)
@@ -33,6 +33,3 @@ class Category(models.Model):
             return url
         else:
             return '{}{}/'.format(self.parent.get_absolute_url(), self.slug)
-
-
- # print Category.objects.all().query
