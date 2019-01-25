@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
-    img = models.ImageField(upload_to = 'images', blank=True, help_text = '100x100px')
+    img = models.ImageField(upload_to='images', blank=True, help_text = '100x100px')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='products')
     description = models.TextField(max_length=300)
 
