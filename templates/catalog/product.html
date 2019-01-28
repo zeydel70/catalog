@@ -1,0 +1,13 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <div id="product-list">
+        <div> Контент </div>
+            <div id="product-item">
+                <img src="{{ product.get_img.url }}" alt="Product">
+                <div> {{ product.name }} </div>
+                <div> {{ product.category }} </div>
+                <div> {{ product.description }} </div>
+            </div>
+    </div>
+    <div id="clear"></div>
+{% endblock %}

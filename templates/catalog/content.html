@@ -4,14 +4,28 @@
         <div> Контент </div>
         {% for product in products %}
             <div id="product-list-item">
-            {% if product.img %}
-                <img src="{{ product.img.url }}">
-            {%  endif %}
-            <div> {{ product.name }} </div>
-            <div> {{ product.category }} </div>
-            <div> {{ product.description }} </div>
+                <img src="{{ product.get_img.url }}" alt="Product">
+                <div><a href="{{ product.get_absolute_url }}"> {{ product.name }} </a> </div>
+                <div> {{ product.category }} </div>
+                <div> {{ product.description }} </div>
             </div>
         {% endfor %}
+        {# Pagination of products #}
+        <div id="pagination">
+            <span>
+                {% if products.has_previous %}
+                    <a href="?page={{ products.previous_page_number }}">Предыдущая</a>
+                {% endif %}
+
+                <span>
+                    Page {{ products.number }} of {{ products.paginator.num_pages }}
+                </span>
+
+                {% if products.has_next %}
+                    <a href="?page={{ products.next_page_number }}">Следующая</a>
+                {% endif %}
+            </span>
+        </div>
     </div>
     <div id="clear"></div>
 {% endblock %}

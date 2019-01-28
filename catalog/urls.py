@@ -27,6 +27,7 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     url(r'^admin/', admin.site.urls),
+    url(r'(?P<path>[-/\w]*)/product/(?P<id_product>[\d]+)/$', views.product),
     url(r'(?P<path>[-/\w]+)/$', views.catalog),
     url(r'^$', catalog)
 ]

@@ -6,18 +6,28 @@ from django.utils.text import slugify
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
-    img = models.ImageField(upload_to='images', blank=True, help_text = '100x100px')
+    img = models.ImageField(upload_to='images', blank=True, help_text='100x100px')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='products')
     description = models.TextField(max_length=300)
 
     def __str__(self):
         return '%s' % self.name
 
+    def get_absolute_url(self):
+        url = '%sproduct/%s/' % (self.category.get_absolute_url(), self.id)
+        return url
+
+    def get_img(self):
+        if self.img:
+            return self.img
+        return self.category.get_category_img()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=128)
     slug = models.SlugField(max_length=50, )
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='child')
+    img = models.ImageField(upload_to='images', blank=True, help_text='category_image')
     description = models.TextField(max_length=300)
 
     class Meta:
@@ -33,3 +43,9 @@ class Category(models.Model):
             return url
         else:
             return '{}{}/'.format(self.parent.get_absolute_url(), self.slug)
+
+    def get_category_img(self):
+        if self.img:
+            return self.img
+        return self.parent.get_category_img()
+

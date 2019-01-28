@@ -1,27 +1,41 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.template import RequestContext
 from django.shortcuts import render
 from django.http import Http404
 
 from .models import Product, Category
 from django.template import Context, Template
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from helpers import *
 
 
 def catalog(request, path=None):
     if path:
-        path_list = path.split('/')
-        path_list = [el for el in path_list if el]
-        try:
-            abs_url = Category.objects.get(slug=path_list[-1]).get_absolute_url()
-            abs_url = abs_url.strip('/')
-        except Category.DoesNotExist:
-            raise Http404
-        if path == abs_url:
-            products = Product.objects.filter(category__in=get_knot_category(Category.objects.get(slug=path_list[-1])))
+        categories = get_knot_category(path)
+        if is_valid_url(path, categories[0]):
+            product_list = Product.objects.filter(category__in=categories)
         else:
             raise Http404
     else:
-        products = Product.objects.all()
+        product_list = Product.objects.all()
+    paginator = Paginator(product_list, 12)    # pagination
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
     return render(request, 'catalog/content.html', {'products': products})
+
+
+def product(request, path, id_product):
+    try:
+        product = Product.objects.get(id=id_product)
+    except Product.DoesNotExist:
+        raise Http404
+    if is_valid_url(path, product.category):
+        return render(request, 'catalog/product.html', {'product': product})
+    else:
+        raise Http404
+

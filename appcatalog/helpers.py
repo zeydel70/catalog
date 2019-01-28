@@ -33,11 +33,18 @@ def get_children(category):
     return result
 
 
-def get_knot_category(slug_category):
+def get_knot_category(path):
+    path_list = path.split('/')
+    path_list = [el for el in path_list if el]
     try:
-        category = Category.objects.get(slug=slug_category)
+        category = Category.objects.get(slug=path_list[-1])
         return [category] + get_children(category)
     except Category.DoesNotExist:
-        raise Http404('Category \'%s\' don\'t exist' % slug_category)
+        raise Http404('Category \'%s\' don\'t exist' % path_list[-1])
 
+
+def is_valid_url(path, category):
+    url = category.get_absolute_url()
+    url = url.strip('/')
+    return path == url
 
