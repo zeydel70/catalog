@@ -1,4 +1,16 @@
 {% extends 'catalog/base.html' %}
+{% block breadcrumb %}
+            <div id="breadcrumb" align="left">
+                Навигация: <a href="/">Главная/</a>
+                {% for category, url in category.breadcrumb %}
+                    {% if forloop.last %}
+                        {{ category }}
+                    {% else %}
+                        <a href="{{ url }}">{{ category }}/ </a>
+                    {% endif %}
+                {% endfor %}
+        </div>
+{% endblock %}
 {% block content %}
     <div id="product-list">
         <div> Контент </div>

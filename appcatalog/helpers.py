@@ -4,26 +4,6 @@ from appcatalog.models import *
 from django.http import Http404
 
 
-# def get_children(category):
-#     '''
-#     :param category: type String - name  of category
-#     :return: list of children for this category
-#
-#     '''
-#
-#     if Category.objects.filter(parent__name=slug_category):
-#         result = list(Category.objects.filter(parent__name=slug_category))
-#         for item in result:
-#             tmp = []
-#             tmp.append(get_children(item))
-#         if any(tmp):
-#             result += tmp
-#         else:
-#             return result
-#     else:
-#         return []
-
-
 def get_children(category):
     children = category.child.all()
     result = []
@@ -47,4 +27,3 @@ def is_valid_url(path, category):
     url = category.get_absolute_url()
     url = url.strip('/')
     return path == url
-

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.utils.text import slugify
 
 
 class Product(models.Model):
@@ -20,7 +19,12 @@ class Product(models.Model):
     def get_img(self):
         if self.img:
             return self.img
-        return self.category.get_category_img()
+        return self.category.get_img()
+
+    def breadcrumb(self):
+        res = list(self.category.breadcrumb())
+        res.append((self.name, self.get_absolute_url()))
+        return res
 
 
 class Category(models.Model):
@@ -44,8 +48,21 @@ class Category(models.Model):
         else:
             return '{}{}/'.format(self.parent.get_absolute_url(), self.slug)
 
-    def get_category_img(self):
+    def get_img(self):
         if self.img:
             return self.img
-        return self.parent.get_category_img()
+        return self.parent.get_img()
+
+    def prepare_breadcrumb(self):
+        url = []
+        url.append((self.name, self.get_absolute_url()))
+        if self.parent is None:
+            return url
+        else:
+            url += self.parent.prepare_breadcrumb()
+        return url
+
+    def breadcrumb(self):
+        return list(reversed(self.prepare_breadcrumb()))
+
 

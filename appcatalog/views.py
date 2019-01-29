@@ -12,11 +12,13 @@ from helpers import *
 def catalog(request, path=None):
     if path:
         categories = get_knot_category(path)
+        category = categories[0]
         if is_valid_url(path, categories[0]):
             product_list = Product.objects.filter(category__in=categories)
         else:
             raise Http404
     else:
+        category = None
         product_list = Product.objects.all()
     paginator = Paginator(product_list, 12)    # pagination
     page = request.GET.get('page')
@@ -26,7 +28,7 @@ def catalog(request, path=None):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
-    return render(request, 'catalog/content.html', {'products': products})
+    return render(request, 'catalog/content.html', {'products': products, 'category': category})
 
 
 def product(request, path, id_product):

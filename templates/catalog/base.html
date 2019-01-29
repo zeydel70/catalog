@@ -10,6 +10,8 @@
 <body>
     <div id="main">
         <div id="header" align="center"> Электронный каталог </div>
+        {% block breadcrumb %}
+        {% endblock %}
         <div id="category"> Категория
             {% for category in categories %}
                <ul>{% include "catalog/tree_category.html" %}</ul>

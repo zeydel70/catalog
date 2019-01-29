@@ -17,6 +17,13 @@ body, html {
     text-align: center;
     background: #8AEAF9;
    }
+#breadcrumb{
+    background: #a8abff;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    margin: 0;
+}
 #category {
     width: 20%;
     height: 100%;
