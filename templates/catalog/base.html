@@ -12,13 +12,38 @@
         <div id="header" align="center"> Электронный каталог </div>
         {% block breadcrumb %}
         {% endblock %}
+        <div>
+            <form action="{% url 'search' %}" method="get">
+                <input type="text" name="q">
+                <input type="submit" value="Search">
+            </form>
+        </div>
         <div id="category"> Категория
             {% for category in categories %}
                <ul>{% include "catalog/tree_category.html" %}</ul>
             {% endfor %}
         </div>
-        {% block content %}
-        {% endblock %}
+        <div id="product-list">
+            {% block content %}
+            {% endblock %}
+            {# Pagination of products #}
+            <div id="pagination">
+                <span>
+                    {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}">Предыдущая</a>
+                    {% endif %}
+
+                    <span>
+                        Page {{ products.number }} of {{ products.paginator.num_pages }}
+                    </span>
+
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}">Следующая</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <div id="clear"></div>
         <div id="footer" align="center"> Дно сайта </div>
     </div>
 

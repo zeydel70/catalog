@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <p>You searched for: <strong>{{ query }}</strong></p>
+    {% if products %}
+        {% for product in products %}
+            <div id="product-list-item">
+                <img src="{{ product.get_img.url }}" alt="Product">
+                <div><a href="{{ product.get_absolute_url }}"> {{ product.name }} </a> </div>
+                <div> {{ product.category }} </div>
+                <div> {{ product.description }} </div>
+            </div>
+        {% endfor %}
+{#        <p>Found {{ products|length }} product.</p>#}
+{#        <ul>#}
+{#            {% for product in products %}#}
+{#            <li>{{ product.name }}</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+    {% else %}
+        <p>No products matched your search criteria.</p>
+    {% endif %}
+{% endblock %}
+
+

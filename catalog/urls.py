@@ -19,7 +19,7 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 
 from appcatalog import views
-from appcatalog.views import catalog
+
 
 # from catalog import settings
 
@@ -27,7 +27,8 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     url(r'^admin/', admin.site.urls),
+    url(r'[-/\w]*/search/$', views.search, name='search'),
     url(r'(?P<path>[-/\w]*)/product/(?P<id_product>[\d]+)/$', views.product),
     url(r'(?P<path>[-/\w]+)/$', views.catalog),
-    url(r'^$', catalog)
+    url(r'^$', views.catalog)
 ]

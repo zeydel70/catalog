@@ -13,7 +13,7 @@ def catalog(request, path=None):
     if path:
         categories = get_knot_category(path)
         category = categories[0]
-        if is_valid_url(path, categories[0]):
+        if is_valid_url(path, category):
             product_list = Product.objects.filter(category__in=categories)
         else:
             raise Http404
@@ -28,7 +28,7 @@ def catalog(request, path=None):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
-    return render(request, 'catalog/content.html', {'products': products, 'category': category})
+    return render(request, 'catalog/list_product.html', {'products': products, 'category': category})
 
 
 def product(request, path, id_product):
@@ -40,4 +40,19 @@ def product(request, path, id_product):
         return render(request, 'catalog/product.html', {'product': product})
     else:
         raise Http404
+
+
+def search(request, path=None):
+    print request.path
+    errors = []
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            errors.append('Enter a search term.')
+        elif len(q) > 20:
+            errors.append('Please enter at most 20 characters.')
+        else:
+            products = Product.objects.filter(name__icontains=q)
+            return render(request, 'catalog/search_results.html', {'products': products, 'query': q})
+    return render(request, 'catalog/search_results.html', {'errors': errors})
 

@@ -21,11 +21,6 @@ class Product(models.Model):
             return self.img
         return self.category.get_img()
 
-    def breadcrumb(self):
-        res = list(self.category.breadcrumb())
-        res.append((self.name, self.get_absolute_url()))
-        return res
-
 
 class Category(models.Model):
     name = models.CharField(max_length=128)
@@ -63,6 +58,6 @@ class Category(models.Model):
         return url
 
     def breadcrumb(self):
-        return list(reversed(self.prepare_breadcrumb()))
+        return reversed(self.prepare_breadcrumb())
 
 
