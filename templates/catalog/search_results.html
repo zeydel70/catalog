@@ -1,7 +1,8 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
-    <p>You searched for: <strong>{{ query }}</strong></p>
+    <p>Вы искали: <strong>{{ query }}</strong></p>
     {% if products %}
+        <p>Найдено {{ products.paginator.count }} товар(ов).</p>
         {% for product in products %}
             <div id="product-list-item">
                 <img src="{{ product.get_img.url }}" alt="Product">
@@ -10,14 +11,9 @@
                 <div> {{ product.description }} </div>
             </div>
         {% endfor %}
-{#        <p>Found {{ products|length }} product.</p>#}
-{#        <ul>#}
-{#            {% for product in products %}#}
-{#            <li>{{ product.name }}</li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
+        {% include "catalog/pagination.html" %}
     {% else %}
-        <p>No products matched your search criteria.</p>
+        <p>По результатам поиска таких товаров не найдено.</p>
     {% endif %}
 {% endblock %}
 

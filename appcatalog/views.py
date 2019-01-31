@@ -5,7 +5,7 @@ from django.http import Http404
 
 from .models import Product, Category
 from django.template import Context, Template
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from helpers import *
 
 
@@ -14,26 +14,19 @@ def catalog(request, path=None):
         categories = get_knot_category(path)
         category = categories[0]
         if is_valid_url(path, category):
-            product_list = Product.objects.filter(category__in=categories)
+            product_list = Product.objects.filter(category__in=categories).order_by('id')
         else:
             raise Http404
     else:
         category = None
-        product_list = Product.objects.all()
-    paginator = Paginator(product_list, 12)    # pagination
-    page = request.GET.get('page')
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
+        product_list = Product.objects.all().order_by('id')
+    products = paginator_products(request, product_list)
     return render(request, 'catalog/list_product.html', {'products': products, 'category': category})
 
 
-def product(request, path, id_product):
+def product(request, path, slug):
     try:
-        product = Product.objects.get(id=id_product)
+        product = Product.objects.get(slug=slug)
     except Product.DoesNotExist:
         raise Http404
     if is_valid_url(path, product.category):
@@ -42,17 +35,16 @@ def product(request, path, id_product):
         raise Http404
 
 
-def search(request, path=None):
+def search(request):
     print request.path
     errors = []
     if 'q' in request.GET:
         q = request.GET['q']
         if not q:
-            errors.append('Enter a search term.')
-        elif len(q) > 20:
-            errors.append('Please enter at most 20 characters.')
+            errors.append('Поиск не выполнен. Введите запрос заново')
         else:
-            products = Product.objects.filter(name__icontains=q)
+            product_list = Product.objects.filter(name__icontains=q[:20]).order_by('id')
+            products = paginator_products(request, product_list)
             return render(request, 'catalog/search_results.html', {'products': products, 'query': q})
-    return render(request, 'catalog/search_results.html', {'errors': errors})
+    return render(request, 'catalog/base.html', {'errors': errors})
 

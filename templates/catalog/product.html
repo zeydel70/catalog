@@ -5,7 +5,7 @@
         {% for category, url in product.category.breadcrumb %}
                 <a href="{{ url }}">{{ category }}/ </a>
         {% endfor %}
-         {{ product }}
+         {{ product.name }}
 {#        {% for product, url in product.breadcrumb %}#}
 {#            {% if forloop.last %}#}
 {#                {{ product }}#}

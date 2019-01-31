@@ -13,8 +13,11 @@
         {% block breadcrumb %}
         {% endblock %}
         <div>
+            {% if errors %}
+                <p style="color: #ff443d;">{{ errors.0}}</p>
+            {% endif %}
             <form action="{% url 'search' %}" method="get">
-                <input type="text" name="q">
+                <input type="text" name="q" value="{{ query }}">
                 <input type="submit" value="Search">
             </form>
         </div>
@@ -26,26 +29,9 @@
         <div id="product-list">
             {% block content %}
             {% endblock %}
-            {# Pagination of products #}
-            <div id="pagination">
-                <span>
-                    {% if products.has_previous %}
-                        <a href="?page={{ products.previous_page_number }}">Предыдущая</a>
-                    {% endif %}
-
-                    <span>
-                        Page {{ products.number }} of {{ products.paginator.num_pages }}
-                    </span>
-
-                    {% if products.has_next %}
-                        <a href="?page={{ products.next_page_number }}">Следующая</a>
-                    {% endif %}
-                </span>
-            </div>
         </div>
         <div id="clear"></div>
         <div id="footer" align="center"> Дно сайта </div>
     </div>
-
 </body>
 </html>

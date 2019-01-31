@@ -1,0 +1,17 @@
+
+{# Pagination of products #}
+<div id="pagination">
+    <span>
+        {% if products.has_previous %}
+            <a href="?q={{ query }}&page={{ products.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span>
+            Страница {{ products.number }} из {{ products.paginator.num_pages }}
+        </span>
+
+        {% if products.has_next %}
+            <a href="?q={{ query }}&page={{ products.next_page_number }}">Следующая</a>
+        {% endif %}
+    </span>
+</div>

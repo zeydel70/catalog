@@ -1,19 +1,29 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
+# from signals import *
+# from django.dispatch import receiver
 
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
     img = models.ImageField(upload_to='images', blank=True, help_text='100x100px')
+    slug = models.SlugField(null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='products')
     description = models.TextField(max_length=300)
+
 
     def __str__(self):
         return '%s' % self.name
 
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.name)
+    #     super(Product, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
-        url = '%sproduct/%s/' % (self.category.get_absolute_url(), self.id)
+        url = '%sproduct/%s/' % (self.category.get_absolute_url(), self.slug)
         return url
 
     def get_img(self):
@@ -24,7 +34,7 @@ class Product(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=128)
-    slug = models.SlugField(max_length=50, )
+    slug = models.SlugField()
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='child')
     img = models.ImageField(upload_to='images', blank=True, help_text='category_image')
     description = models.TextField(max_length=300)
@@ -61,3 +71,9 @@ class Category(models.Model):
         return reversed(self.prepare_breadcrumb())
 
 
+def generate_slug(sender, instance, **kwargs):
+    print('ins111=', instance)
+    instance.slug = slugify(instance.name)
+
+
+pre_save.connect(generate_slug, sender=Product)
