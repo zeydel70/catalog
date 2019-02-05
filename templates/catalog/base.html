@@ -22,6 +22,7 @@
             </form>
         </div>
         <div id="category"> Категория
+            {{ categories }}
             {% for category in categories %}
                <ul>{% include "catalog/tree_category.html" %}</ul>
             {% endfor %}

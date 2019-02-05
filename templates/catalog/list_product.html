@@ -14,12 +14,14 @@
 {% block content %}
         <div> Контент </div>
         {% for product in products %}
-            <div id="product-list-item">
-                <img src="{{ product.get_img.url }}" alt="Product">
-                <div><a href="{{ product.get_absolute_url }}"> {{ product.name }} </a> </div>
-                <div> {{ product.category }} </div>
-                <div> {{ product.description }} </div>
-            </div>
+            <ul>
+                <li id="product-list-item">
+                    <img src="{{ product.get_img.url }}" alt="Product">
+                    <div><a href="{{ product.get_absolute_url }}"> {{ product.name }} </a> </div>
+                    <div> {{ product.category }} </div>
+                    <div> {{ product.description }} </div>
+                </li>
+            </ul>
         {% endfor %}
         {% include "catalog/pagination.html" %}
 {% endblock %}

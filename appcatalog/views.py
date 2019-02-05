@@ -3,9 +3,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import Http404
 
-from .models import Product, Category
+from appcatalog.models import Product, Category
 from django.template import Context, Template
-
 from helpers import *
 
 
@@ -47,4 +46,3 @@ def search(request):
             products = paginator_products(request, product_list)
             return render(request, 'catalog/search_results.html', {'products': products, 'query': q})
     return render(request, 'catalog/base.html', {'errors': errors})
-

@@ -1,7 +1,9 @@
 from models import Category
+from .helpers import *
 
 
 def context_catalog(request):
+    print(tree_catalog())
     return {
-        'categories': Category.objects.filter(parent__isnull=True)
+        'categories': tree_catalog()
     }

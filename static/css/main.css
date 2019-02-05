@@ -43,7 +43,9 @@ body, html {
     background: #9fd690;
    }
 #product-list-item {
+    position: absolute;
     display: inline-block;
+    height: 300px;
     width: 347px;
     padding: 5px;
     margin: 5px;
