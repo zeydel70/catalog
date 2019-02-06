@@ -3,7 +3,8 @@ from .helpers import *
 
 
 def context_catalog(request):
-    print(tree_catalog())
-    return {
-        'categories': tree_catalog()
-    }
+    # print(tree_catalog())
+    # return {
+    #     'categories': tree_catalog()
+    # }
+    return {}

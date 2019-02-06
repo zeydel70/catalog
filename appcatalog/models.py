@@ -40,11 +40,11 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
     def __str__(self):
-        return '%s' % self.name
+        return '%s #%s' % (self.name, self.pk)
 
-    def clean(self):
-        if get_level_category(self.parent) == 3:
-            raise ValidationError({'parent': 'Dont\'t use category greater 3 level'})
+    # def clean(self):
+    #     if get_level_category(self.parent) == 3:
+    #         raise ValidationError({'parent': 'Dont\'t use category greater 3 level'})
 
     def get_absolute_url(self):
         if self.parent is None:

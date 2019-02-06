@@ -14,36 +14,30 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 #     return res
 
 
-def get_children2(category, categories):
-    res = []
+def get_children(category, categories):
+    children_category = []
     children = [[cat] for cat in categories if cat.parent_id == category.id]
-    res.extend(children)
+    children_category.extend(children)
     for child in children:
         child.append(get_children(child[0], categories))
-    return res
+    return children_category
 
 
-# def node_category(category, categories):
-#     res = []
-#     res.append(get_children2(category, categories))
-#     res.insert(0, category)
-#     return res
-
-
-def tree_catalog():
+def tree_categories():
+    tree = []
     categories = Category.objects.all()
-    roots = [cat for cat in categories if cat.parent_id is None]
-    res = []
-    for cat in roots:
-        res.append(node_category(cat, categories))
-    return res
+    for root in [category for category in categories if category.parent_id is None]:
+        branch_category = [root, get_children(root, categories)]
+        tree.append(branch_category)
+    return tree
 
 
-def get_knot_category(path):
+def get_valid_category(path):
     path_list = path.split('/')
     path_list = [el for el in path_list if el]
-    #
-    # ghb помощи while сравниваем  элементы списка дерева и сптска path_list опускаясь ниже по иерархии
+    tree = tree_categories()
+
+    return None
 
     # categories = Category.objects.all()
     # category = [cat for cat in categories if cat.slug == path_list[-1]]

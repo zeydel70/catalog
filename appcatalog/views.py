@@ -9,18 +9,19 @@ from helpers import *
 
 
 def catalog(request, path=None):
-    if path:
-        categories = get_knot_category(path)
-        category = categories[0]
-        if is_valid_url(path, category):
-            product_list = Product.objects.filter(category__in=categories).order_by('id')
-        else:
-            raise Http404
-    else:
-        category = None
-        product_list = Product.objects.all().order_by('id')
-    products = paginator_products(request, product_list)
-    return render(request, 'catalog/list_product.html', {'products': products, 'category': category})
+    # if path:
+    #     categories = get_knot_category(path)
+    #     category = categories[0]
+    #     if is_valid_url(path, category):
+    #         product_list = Product.objects.filter(category__in=categories).order_by('id')
+    #     else:
+    #         raise Http404
+    # else:
+    #     category = None
+    #     product_list = Product.objects.all().order_by('id')
+    # products = paginator_products(request, product_list)
+    # return render(request, 'catalog/list_product.html', {'products': products, 'category': category})
+    pass
 
 
 def product(request, path, slug):
